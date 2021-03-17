@@ -37,20 +37,9 @@ public:
 
   int L1norm(const State &goal) const noexcept;
 
-  void print() {
-    for (int i = 0; i < size; i++) {
-      for (int j = 0; j < size; j++) {
-        std::cout << puzzle[i][j] << ' ';
-      }
-
-      std::cout << std::endl;
-    }
-    std::cout << std::endl;
-  }
-
   State &update(Direction direction);
 
-  bool operator==(const State &other) const noexcept;
+  inline bool operator==(const State &other) const noexcept { return puzzle == other.puzzle; }
 
   puzzle_t puzzle;
   std::pair<int, int> blank;
@@ -129,7 +118,7 @@ private:
 
   void _RBFS_(bool tieBreak = false) noexcept;
 
-  std::pair<bool, int> _RBFSHelper_(Node *node, float limit, bool tieBreak = false) noexcept;
+  std::pair<bool, float> _RBFSHelper_(Node *node, float limit, bool tieBreak = false) noexcept;
 
   State _puzzle_;
   State _goal_;

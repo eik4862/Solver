@@ -52,18 +52,6 @@ State &State::update(Direction direction) {
   return *this;
 }
 
-bool State::operator==(const State &other) const noexcept {
-  if (size != other.size) return false;
-
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      if (puzzle[i][j] != other.puzzle[i][j]) return false;
-    }
-  }
-
-  return true;
-}
-
 std::vector<Direction> PuzzleSolver::_actions_(const Node *node) noexcept {
   std::vector<Direction> validActions;
 
@@ -144,13 +132,13 @@ void PuzzleSolver::_RBFS_(bool tieBreak) noexcept {
 
   _visitedNodes_++;
 
-  std::pair<bool, int> result = _RBFSHelper_(root, MAXFLOAT, tieBreak);
+  std::pair<bool, float> result = _RBFSHelper_(root, MAXFLOAT, tieBreak);
   _status_ = result.first;
 }
 
-std::pair<bool, int> PuzzleSolver::_RBFSHelper_(Node *node, float limit, bool tieBreak) noexcept {
+std::pair<bool, float> PuzzleSolver::_RBFSHelper_(Node *node, float limit, bool tieBreak) noexcept {
   Node *child, *best;
-  std::pair<bool, int> result;
+  std::pair<bool, float> result;
   float alternative;
 
   if (_goalTest_(node)) {
